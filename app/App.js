@@ -7,6 +7,7 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 import Heading from './Heading';
 import Input from './Input';
 import Button from './Button';
+import TodoList from './TodoList';
 
 let todoIndex = 0;
 
@@ -41,11 +42,13 @@ class App extends Component {
 
         todoIndex++;
         this.state.todos.push(todo);
-        this.setState({todos: this.state.todos, inputValue:''}, () => console.log(this.state));
+        this.setState({todos: this.state.todos, inputValue:''}, () => console.log('Current state', this.state));
     }
 
     render() {
-        const { inputValue } = this.state;
+        const { inputValue, todos } = this.state;
+        console.log('todos en app', todos);
+
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.content}>
@@ -53,6 +56,7 @@ class App extends Component {
                     <Input
                         inputValue={inputValue}
                         inputChange={(text) => this.inputChange(text)} />
+                    <TodoList todos={todos} />
                     <Button submitTodo={() => this.submitTodo(this.state.inputValue)} />
                 </ScrollView>
             </View>
