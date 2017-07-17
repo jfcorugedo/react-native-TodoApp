@@ -4,10 +4,9 @@
 
 import React, {Component} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import Heading from './Heading';
-import Input from './Input';
-import Button from './Button';
-import TodoList from './TodoList';
+import Heading from './heading';
+import Adder from './adder';
+import TodoList from './todo-list';
 
 let todoIndex = 0;
 
@@ -18,15 +17,8 @@ class App extends Component {
         console.log('\n**********************\n*  Building TodoApp  *\n**********************\n');
         this.state = {
             todos: [],
-            inputValue: '',
             type: 'All'
         };
-    }
-
-    inputChange(inputValue) {
-        console.log('Old value', this.state.inputValue);
-        this.setState({ inputValue });
-        console.log('New value', inputValue);
     }
 
     submitTodo(inputValue) {
@@ -42,22 +34,33 @@ class App extends Component {
 
         todoIndex++;
         this.state.todos.push(todo);
-        this.setState({todos: this.state.todos, inputValue:''}, () => console.log('Current state', this.state));
+        this.setState({todos: this.state.todos}, () => console.log('Current state', this.state));
+    }
+
+    toggleComplete(todo) {
+        todo.complete = !todo.complete;
+        this.setState({todos: this.state.todos});
+    }
+
+    deleteTodo(todo) {
+        let {todos} = this.state;
+        todos = todos.filter((todoItem) => todoItem.todoIndex !== todo.todoIndex);
+        this.setState({todos});
     }
 
     render() {
-        const { inputValue, todos } = this.state;
+        const { todos } = this.state;
         console.log('todos en app', todos);
 
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.content}>
                     <Heading />
-                    <Input
-                        inputValue={inputValue}
-                        inputChange={(text) => this.inputChange(text)} />
-                    <TodoList todos={todos} />
-                    <Button submitTodo={() => this.submitTodo(this.state.inputValue)} />
+                    <Adder submitTodo={ inputValue => this.submitTodo(inputValue) } />
+                    <TodoList
+                        todos={todos}
+                        toggleComplete={(todo) => this.toggleComplete(todo)}
+                        deleteTodo={(todo) => this.deleteTodo(todo)} />
                 </ScrollView>
             </View>
         )

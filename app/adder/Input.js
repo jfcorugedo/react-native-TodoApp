@@ -1,7 +1,7 @@
 /**
  * Created by juanfernandez-corugedoigual on 18/06/2017.
  */
-import React, {Component} from 'react';
+import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 
 const Input = ({ inputValue, inputChange }) => (
@@ -18,6 +18,7 @@ const Input = ({ inputValue, inputChange }) => (
 
 const styles = StyleSheet.create({
     inputContainer: {
+        flex: 1,
         marginLeft: 20,
         marginRight: 20,
         shadowOpacity: 0.2,
