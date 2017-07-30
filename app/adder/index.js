@@ -26,7 +26,7 @@ class Adder extends Component {
                 <Input
                     inputValue={this.state.todoTask}
                     inputChange={(text) => this.taskChange(text)} />
-                <Button submitTodo={() => submitTodo(this.state.todoTask)} />
+                <Button submitTodo={() => {this.setState({todoTask: ''}); submitTodo(this.state.todoTask)} } />
             </View>
         );
     }
